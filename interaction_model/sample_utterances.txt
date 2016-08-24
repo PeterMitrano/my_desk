@@ -1,0 +1,13 @@
+GoToPositionIntent go to the {Position} position
+
+GoToHeightIntent go to the {Height} position
+
+GoUpIntent go more up
+GoUpIntent go further up
+GoUpIntent go up
+GoUpIntent rise
+
+GoDownIntent go more down
+GoDownIntent go further down
+GoDownIntent go down
+GoDownIntent rise

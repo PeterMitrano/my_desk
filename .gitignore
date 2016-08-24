@@ -1,0 +1,10 @@
+*.swp
+*.pyc
+*.zip
+build
+.venv
+.coverage
+.env
+venv
+doc
+html
