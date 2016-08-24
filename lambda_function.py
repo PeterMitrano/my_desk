@@ -11,21 +11,22 @@ def handle_event(event, context):
         raise RuntimeError('Wrong applicationId')
 
     request = event['request']
+    command_endpoint = None
     if 'intent' in request:
         intent = request['intent']['name']
 
         if intent == 'GoToPositionIntent':
             position = request['intent']['slots']['Position']['value']
-            if position == 'sit':
+            if position == 'sit' or position == 'sitting':
                 logging.getLogger(LOGGER).warn('sit')
                 command_endpoint = 'position/sit'
-            elif position == 'stand':
+            elif position == 'stand' or position == 'standing':
                 logging.getLogger(LOGGER).warn('stand')
                 command_endpoint = 'position/stand'
         elif intent == 'GoToHeightIntent':
             height = request['intent']['slots']['Height']['value']
             logging.getLogger(LOGGER).warn(height)
-            command_endpoint = 'height/%i' % height
+            command_endpoint = 'height/' + height
         elif intent == 'GoUpIntent':
             logging.getLogger(LOGGER).warn('up')
             command_endpoint = 'up'
@@ -36,7 +37,7 @@ def handle_event(event, context):
             logging.getLogger(LOGGER).warn('stop')
             command_endpoint = 'stop'
 
-    if requests.get('http://66.189.43.74:3776/' + command_endpoint).ok:
+    if command_endpoint and requests.get('http://66.189.43.74:3776/' + command_endpoint).ok:
         response = { "version": 1.0, "response": { } }
     else:
         response = {
