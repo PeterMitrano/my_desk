@@ -10,7 +10,7 @@ def send_command(command_endpoint):
     result = namedtuple('Result', ['err', 'error_msg', 'err_speech'])
     if not command_endpoint:
         return result(True, 'command endpoint is ' + str(command_endpoint),
-                      "I coudn't understand your command.")
+                      "I couldn't understand your command.")
 
     try:
         get_result = requests.get(
@@ -66,8 +66,8 @@ def handle_event(event, context):
             "version": 1.0,
             "response": {
                 "outputSpeech": {
-                    "type": "SSML",
-                    "ssml": result.err_speech
+                    "type": "PlainText",
+                    "text": result.err_speech
                 }
             }
         }
