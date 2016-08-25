@@ -1,3 +1,3 @@
 #!/bin/bash
-find . -name "*.py" -exec yapf -i '{}' +
-find . -name "*.py" -exec pylint -E '{}' +
+yapf -i lambda_function.py
+pylint -E lambda_function.py

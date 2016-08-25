@@ -5,19 +5,25 @@ import requests
 LOGGER = 'my_desk'
 APP_ID = 'amzn1.ask.skill.999f5e91-7264-4660-b397-5efc340a51f9'
 
+
 def send_command(command_endpoint):
     result = namedtuple('Result', ['err', 'error_msg', 'err_speech'])
     if not command_endpoint:
-        return result(True, 'command endpoint is ' + str(command_endpoint), "I coudn't understand your command.")
+        return result(True, 'command endpoint is ' + str(command_endpoint),
+                      "I coudn't understand your command.")
 
     try:
-        get_result = requests.get('http://66.189.43.74:3776/' + command_endpoint, timeout=5)
+        get_result = requests.get(
+            'http://66.189.43.74:3776/' + command_endpoint, timeout=5)
         if get_result.ok:
             return result(False, None, None)
         else:
-            return result(True, "failed to get result", "Your desk sent an invalid response.")
+            return result(True, "failed to get result",
+                          "Your desk sent an invalid response.")
     except requests.exceptions.Timeout:
-            return result(True, "get request timed out", "Your desk did not respond to my command.")
+        return result(True, "get request timed out",
+                      "Your desk did not respond to my command.")
+
 
 def handle_event(event, context):
     logging.getLogger(LOGGER).warn(event)
@@ -54,7 +60,8 @@ def handle_event(event, context):
 
     result = send_command(command_endpoint)
     if result.err:
-        logging.getLogger(LOGGER).warn("error sending command: %s", result.error_msg)
+        logging.getLogger(LOGGER).warn("error sending command: %s",
+                                       result.error_msg)
         response = {
             "version": 1.0,
             "response": {
@@ -65,7 +72,7 @@ def handle_event(event, context):
             }
         }
     else:
-        response = { "version": 1.0, "response": { } }
+        response = {"version": 1.0, "response": {}}
 
     logging.getLogger(LOGGER).warn(response)
     return response
