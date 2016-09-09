@@ -10,11 +10,11 @@ def send_command(command_endpoint):
     result = namedtuple('Result', ['err', 'error_msg', 'err_speech'])
     if not command_endpoint:
         return result(True, 'command endpoint is ' + str(command_endpoint),
-                      "I couldn't understand your command.")
+                      "I could not understand your command.")
 
     try:
         get_result = requests.get(
-            'http://66.189.43.74:3776/' + command_endpoint, timeout=5)
+            'http://66.189.43.74:3776/' + command_endpoint, timeout=3)
         if get_result.ok:
             return result(False, None, None)
         else:
